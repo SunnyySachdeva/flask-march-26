@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}
+    {{super()}}
+    Post
+{% endblock %}
+{% block contents %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/post-bg.jpg') }})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>{{post.title}}</h1>
+                            <h2 class="subheading">{{post.subtitle}}</h2>
+                            <span class="meta">
+                                Posted by
+                                <a href="#!">{{post.author.name}}</a>
+                                on {{post.date_created}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article class="mb-5">
+            <div class="container px-4 px-lg-5 mb-4">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        {{post.body|safe}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container-fluid comment-section py-5 my-5">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        {{ ckeditor.load(pkg_type='basic') }}
+                        {{ ckeditor.config(name='comment_body') }}
+                        {{render_form(form, novalidate=True)}}
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                        {% if post.comments != [] %}
+                            <h3>All Comments</h3>
+                        <div class="bg-comment text-left">
+                            {% for comment in post.comments %}
+                                <h5 class="pt-0">{{ comment.comment|safe }}</h5>
+                                <p class="pl-5"> - By {{ comment.author.name }}</p>
+                                <hr class="bg-dark" />
+                            {% endfor %}
+
+                        </div>
+                        {% else %}
+                            <h3>No Comments Yet!</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </article>
+        <!-- Footer-->
+{% endblock %}

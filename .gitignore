@@ -1,0 +1,6 @@
+.env
+.venv
+startbootstrap-clean-blog-gh-pages.zip
+blogs.db
+.idea
+__pycache__

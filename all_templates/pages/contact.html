@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}
+    {{super()}}
+    Contact Us
+{% endblock %}
+{% block contents %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/contact-bg.jpg') }})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            {% if message_sent == 0 %}
+                                <h1>Request Sent</h1>
+                                <span class="subheading">Have more questions? I have answers.</span>
+                            {% elif message_sent == 1 %}
+                                <h1>Request Failed</h1>
+                                <span class="subheading">Please Try Again.</span>
+                            {% else %}
+                                <h1>Contact Me</h1>
+                                <span class="subheading">Have questions? I have answers.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
+                        {{ ckeditor.load() }}
+                        {{ ckeditor.config(name='body') }}
+                        {{ render_form(form, novalidate=True) }}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Footer-->
+{% endblock %}
